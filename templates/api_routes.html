@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Routes</title>
+</head>
+<body>
+    <h1>API Routes</h1>
+    <ul>
+        {% for route in routes %}
+        <li>{{ route.method }} - <a href="{{ route.route }}">{{ route.route }}</a></li>
+        {% endfor %}
+    </ul>
+    <a href="/">Back to Home</a>
+</body>
+</html>
