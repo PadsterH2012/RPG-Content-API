@@ -4,6 +4,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from app.routes import character, quest, trait, character_behavior, pdf_upload
 from app.database import create_tables
+from app.config import settings
 
 app = FastAPI(
     title="RPG Content API",
@@ -15,10 +16,10 @@ app = FastAPI(
 create_tables()
 
 # Mount the static files directory
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=settings.BASE_DIR + "/static"), name="static")
 
 # Set up Jinja2 templates
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory=settings.BASE_DIR + "/templates")
 
 app.include_router(character.router, prefix="/characters", tags=["characters"])
 app.include_router(quest.router, prefix="/quests", tags=["quests"])
@@ -32,7 +33,6 @@ async def root(request: Request):
 
 @app.get("/sample_data")
 async def get_sample_data():
-    # This is just an example. You should replace this with actual data from your database.
     return {
         "characters": [
             {"id": 1, "name": "Giblo Trellis", "backstory": "A mysterious figure with a dark past."},
